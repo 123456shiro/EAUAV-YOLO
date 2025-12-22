@@ -99,5 +99,3 @@ This work was supported by [funding information would go here]. We thank all con
 *Note: This README is based on the paper content. Actual implementation details may vary depending on the specific code release.*
 
 ---
-
-*注：此README基于论文内容编写，具体实现细节可能需要参考完整的源代码和训练脚本。*
