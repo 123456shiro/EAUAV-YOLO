@@ -1,80 +1,87 @@
 # EAUAV-YOLO
 An Efficiency and Accuracy Enhanced Lightweight Detector for Small Objects in Aerial Images
 
-以下是一个基于您提供的学术论文内容编写的README文件：
+# EAUAV-YOLO: Efficiency and Accuracy Enhanced Lightweight Detector for Small Objects in Aerial Images
 
-# EAUAV-YOLO: 效率与精度增强的小型无人机图像目标检测器
+## Overview
 
-## 简介
+This repository contains the implementation of EAUAV-YOLO, a lightweight object detection framework specifically designed for unmanned aerial vehicle (UAV) applications. The framework addresses the challenges of detecting small objects in aerial imagery while maintaining computational efficiency suitable for deployment on resource-constrained UAV platforms.
 
-本项目实现了EAUAV-YOLO，一种专为无人机(UAV)平台设计的轻量级目标检测框架，专注于提升小目标检测的准确性和效率。该方法通过集成改进的下采样保真度、跨尺度表示、细节敏感解码和几何感知回归机制，在严格的效率约束下显著提升了小目标的可检测性。
+## Key Features
 
-## 主要特性
+- **Depth-augmented Spatial Convolution (3DSConv)**: Preserves fine-scale structural cues during downsampling to prevent small object features from being overwhelmed by background responses
+- **Multi-path Feature Fusion Pyramid Network (MFFPN)**: Enhances cross-scale representation through high-resolution reconstruction and multi-path interactions
+- **Lightweight Shared Detail-Enhanced Detection Head (LSDECD)**: Improves edge-level feature discrimination while reducing parameter count
+- **Scale-aware Regression Loss (Wise-EIoU)**: Increases localization robustness for small and distant targets by emphasizing reliable geometric cues
 
-- **深度增强的空间卷积 (3DSConv)**：在下采样过程中保留小目标特征线索
-- **多路径特征融合金字塔网络 (MFFPN)**：增强小目标检测的跨尺度表示能力
-- **轻量级共享细节增强检测头 (LSDECD)**：在减少参数的同时强化边缘特征
-- **尺度感知回归损失 (Wise-EIoU)**：提高小目标和远距离目标的定位鲁棒性
+## Architecture Components
 
-## 性能表现
+### 1. 3D Spatial Convolution Module (3DSConv)
+Preserves fine-scale spatial information during early downsampling by embedding position-aware weighting into the downsampling process. Uses average pooling followed by depth-aware convolution to estimate spatial attention weights.
 
-在VisDrone2019和TinyPerson数据集上的实验结果表明，EAUAV-YOLO在仅2.4M参数的情况下达到了卓越的性能：
-- VisDrone2019: 0.413 mAP@50 和 0.247 mAP@50:95
-- TinyPerson: 0.222 mAP@50 和 0.0812 mAP@50:95
+### 2. Multi-path Feature Fusion Pyramid Network (MFFPN)
+Balances utilization of low-level high-resolution features and high-level semantic features through:
+- Triple Feature Concat (TFConcat): Aligns features from three adjacent scales
+- Multiple Scale Fuse (MSFuse): Emphasizes fine-grained cues by upsampling to highest resolution
 
-相比YOLOv11n，分别提升了24%和27%的性能指标，同时保持了极低的计算复杂度。
+### 3. Lightweight Shared Detail-Enhanced Detection Head (LSDECD)
+Employs re-parameterizable detail-enhanced convolution (DEConv) with differential operators to accentuate intensity transitions and structural irregularities, making small objects more distinguishable.
 
-## 技术细节
+### 4. Wise-EIoU Loss Function
+A scale-aware loss function that builds upon EIoU with dynamic focusing principles to improve regression stability for small objects.
 
-### 核心组件
+## Performance
 
-1. **3D空间卷积模块**
-   - 通过空间注意力权重图保留早期下采样过程中的精细尺度结构线索
-   - 使用平均池化和深度感知卷积估计空间权重
+EAUAV-YOLO achieves state-of-the-art performance on UAV-oriented datasets with ultra-lightweight complexity:
 
-2. **多路径特征融合金字塔网络**
-   - Triple Feature Concat (TFConcat): 对齐三个相邻尺度的特征
-   - Multiple Scale Fuse (MSFuse): 强调细粒度线索并保留高分辨率结构
+### VisDrone2019 Results
+- **mAP@50**: 0.413
+- **mAP@50:95**: 0.247
+- **Parameters**: 2.4M
 
-3. **轻量级共享细节增强卷积检测头**
-   - 基于DEConv的可重参数化细节增强卷积
-   - 使用方向差分滤波器突出强度变化和结构不规则性
+### TinyPerson Results
+- **mAP@50**: 0.222
+- **mAP@50:95**: 0.0812
+- **Parameters**: 2.4M
 
-4. **Wise-EIoU损失函数**
-   - 结合EIoU和动态聚焦原理的尺度感知损失函数
-   - 通过指数衰减项调节预测框的贡献
+Compared to YOLOv11n baseline (0.334 mAP@50, 0.195 mAP@50:95 with 2.6M parameters), EAUAV-YOLO achieves 24% and 27% improvements respectively while reducing parameter count.
 
-## 实验环境
+## Experimental Setup
 
-- CPU: Hygon C86 7390 32-core
-- GPU: NVIDIA A40 48GB
-- 训练轮数: 300 epochs
-- 批次大小: 8
-- 输入分辨率: 640×640
-- 初始学习率: 0.01
+- **Hardware**: Hygon C86 7390 32-core CPU, NVIDIA A40 48GB GPU
+- **Training**: 300 epochs, SGD optimizer (momentum=0.937, weight_decay=0.0005)
+- **Batch Size**: 8
+- **Input Resolution**: 640×640
+- **Learning Rate**: 0.01
 
-## 数据集支持
+## Datasets
 
-- VisDrone2019
-- TinyPerson
+- **VisDrone2019**: Benchmark for UAV object detection with densely distributed small objects
+- **TinyPerson**: Dataset focused on extremely small human instances in aerial environments
 
-## 应用场景
+## Applications
 
-该检测器特别适用于资源受限的无人机平台，包括但不限于：
-- 搜索救援任务
-- 精准农业监测
-- 电力线路巡检
-- 其他需要实时小目标检测的空中应用场景
+EAUAV-YOLO is particularly well-suited for UAV applications including:
+- Search and rescue operations
+- Precision agriculture monitoring
+- Power line inspection
+- Real-time surveillance in resource-constrained environments
 
-## 安装与使用
+## Installation
 
 ```bash
-# 在此处添加安装说明
+# Installation instructions would go here
 ```
 
-## 引用
+## Usage
 
-如果您在研究中使用了本项目，请引用我们的论文：
+```bash
+# Usage examples would go here
+```
+
+## Citation
+
+If you use this work in your research, please cite our paper:
 
 ```bibtex
 @article{EAUAV-YOLO,
@@ -83,9 +90,13 @@ An Efficiency and Accuracy Enhanced Lightweight Detector for Small Objects in Ae
 }
 ```
 
-## 致谢
+## Acknowledgements
 
-感谢所有开源项目的贡献者和支持本研究的机构。
+This work was supported by [funding information would go here]. We thank all contributors and the computer vision community for their valuable resources and insights.
+
+---
+
+*Note: This README is based on the paper content. Actual implementation details may vary depending on the specific code release.*
 
 ---
 
