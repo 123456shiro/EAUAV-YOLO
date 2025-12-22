@@ -1,0 +1,10 @@
+
+path: /home/lighting/shiro_s/TinyPerson
+train: images/train
+val: images/val
+
+
+names:
+  0: earth_person
+  1: sea_person
+
