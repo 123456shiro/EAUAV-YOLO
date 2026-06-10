@@ -81,7 +81,7 @@ EAUAV-YOLO achieves state-of-the-art performance on UAV-oriented datasets with a
 
 ### TinyPerson Results
 
-| Metric        | EAUAV-YOLO (ours) | YOLOv11n (baseline) |
+| Metric        | EAUAV-YOLO | YOLOv11n (baseline) |
 |---------------|-------------------:|---------------------:|
 | mAP@50        | **0.222**          | 0.182                |
 | mAP@50:95     | **0.0812**         | 0.0587               |
