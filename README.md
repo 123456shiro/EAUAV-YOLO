@@ -210,19 +210,6 @@ model.predict(
 )
 ```
 
----
-
-## Applications
-
-EAUAV-YOLO is particularly well-suited for UAV applications including:
-
-- Search and rescue operations
-- Precision agriculture monitoring
-- Power line inspection
-- Real-time surveillance in resource-constrained environments
-
----
-
 ## Citation
 
 If you use this work in your research, please cite our paper:
