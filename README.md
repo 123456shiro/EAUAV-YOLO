@@ -16,7 +16,7 @@ This repository contains the implementation of EAUAV-YOLO, a lightweight object 
 
 ## Architecture Components
 
-### 1. 3D Spatial Convolution Module (3DSConv)
+### 1. Depth-augmented Spatial Convolution Module (3DSConv)
 Preserves fine-scale spatial information during early downsampling by embedding position-aware weighting into the downsampling process. Uses average pooling followed by depth-aware convolution to estimate spatial attention weights.
 
 ### 2. Multi-path Feature Fusion Pyramid Network (MFFPN)
