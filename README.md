@@ -105,8 +105,8 @@ Compared to the YOLOv11n baseline, EAUAV-YOLO achieves **~24%** and **~27%** imp
 
 ## Datasets
 
-- **VisDrone2019**: A benchmark for UAV object detection with densely distributed small objects.
-- **TinyPerson**: A dataset focused on extremely small human instances in aerial environments.
+- **VisDrone2019**: A benchmark for UAV object detection with densely distributed small objects. https://github.com/VisDrone/VisDrone-Dataset
+- **TinyPerson**: A dataset focused on extremely small human instances in aerial environments. https://github.com/sxy1122/TinyBenchmark
 
 Dataset configuration files are provided in `ultralytics/cfg/datasets/`. Please edit the `path:` field inside each YAML file to point to your local dataset root directory, for example:
 
